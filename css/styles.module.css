@@ -1,0 +1,23 @@
+.test {
+    line-height: 1.45;
+    text-align: justify;
+}
+
+.test strong {
+    display: inline-block;
+    color: black;
+    font-size: 17px;
+    font-family: Arial, sans-serif;
+    margin: 0.5rem 0;
+}
+
+.test h4 {
+    color: #000066;
+    font-size: 18px;
+    font-family: Arial, sans-serif;
+}
+
+.test a {
+    color: #ff6600;
+    text-decoration: none;
+}

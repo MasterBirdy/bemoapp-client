@@ -5,11 +5,12 @@ import Head from "next/head";
 import Page from "../components/Page";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
+import Form from "../components/Form";
 import hash from "object-hash";
 import Router from "next/router";
 import ls from "local-storage";
 
-export default function Home({ data }) {
+export default function ContactUs({ data }) {
     useEffect(() => {
         if (
             ls.get("password") === null &&
@@ -50,31 +51,30 @@ export default function Home({ data }) {
     return (
         <div className="container">
             <Head>
-                <title>{data.homes[0].title}</title>
-                {data.homes[0].meta_title && (
+                <title>{data.contactpages[0].title}</title>
+                {data.contactpages[0].meta_title && (
                     <meta
                         name="title"
-                        content={data.homes[0].meta_title}
+                        content={data.contactpages[0].meta_title}
                     ></meta>
                 )}
-                {data.homes[0].meta_description && (
+                {data.contactpages[0].meta_description && (
                     <meta
                         name="description"
-                        content={data.homes[0].meta_description}
+                        content={data.contactpages[0].meta_description}
                     ></meta>
                 )}
-                {data.homes[0].no_index_enabled && (
+                {data.contactpages[0].no_index_enabled && (
                     <meta name="robots" content="noindex"></meta>
                 )}
-                <link rel="icon" href="/favicon.ico" />
             </Head>
             <main>
                 <NavBar></NavBar>
                 <Page
-                    title={data.homes[0].title}
-                    content={data.homes[0].content}
-                    image={data.homes[0].image.url}
+                    content={data.contactpages[0].content}
+                    image={data.contactpages[0].image.url}
                 ></Page>
+                <Form listedEmail={data.contactpages[0].listed_email}></Form>
                 <Footer></Footer>
             </main>
 
@@ -103,19 +103,20 @@ export async function getServerSideProps(context) {
         },
         body: JSON.stringify({
             query: `{
-                homes 
+                contactpages 
                 {
                   id,
                   title,
+                  content,
                   meta_title,
                   meta_description,
                   no_index_enabled,
-                  content,
+                  listed_email,
                   image {
                   url
                   }
-                },
-                analytics {
+                }
+                  analytics {
                   id,
                   google_analytics,
                   facebook_analytics
@@ -123,7 +124,6 @@ export async function getServerSideProps(context) {
               }`,
         }),
     });
-
     const json = await res.json();
     if (json.errors) {
         console.error(json.errors);
